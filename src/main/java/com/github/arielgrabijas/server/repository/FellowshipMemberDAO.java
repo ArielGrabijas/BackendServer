@@ -1,11 +1,11 @@
-package com.github.arielgrabijas.SpringBootDemo.Repository;
+package com.github.arielgrabijas.server.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.github.arielgrabijas.SpringBootDemo.Model.Fellowshipmember;
+import com.github.arielgrabijas.server.model.entities.Fellowshipmember;
 
 @Repository
 public interface FellowshipMemberDAO extends JpaRepository<Fellowshipmember, Integer>{

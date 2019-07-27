@@ -1,8 +1,10 @@
-package com.github.arielgrabijas.SpringBootDemo.Model;
+package com.github.arielgrabijas.server.model.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.github.arielgrabijas.server.model.dto.Member;
 
 import java.util.Date;
 
@@ -28,6 +30,18 @@ public class Fellowshipmember implements Serializable {
 
 	private String weapontype;
 
+	public Fellowshipmember() {
+		
+	}
+	
+	public Fellowshipmember(Member member) {
+		this.id = member.getId();
+		this.joined = member.getJoined();
+		this.name = member.getName();
+		this.race = member.getRace();
+		this.weapontype = member.getWeapontype();
+	}
+	
 	public Integer getId() {
 		return this.id;
 	}

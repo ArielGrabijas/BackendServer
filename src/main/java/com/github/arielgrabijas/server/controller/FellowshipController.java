@@ -1,4 +1,4 @@
-package com.github.arielgrabijas.SpringBootDemo.REST;
+package com.github.arielgrabijas.server.controller;
 
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -21,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.arielgrabijas.SpringBootDemo.Model.Fellowshipmember;
-import com.github.arielgrabijas.SpringBootDemo.Service.FellowshipService;
+import com.github.arielgrabijas.server.model.dto.Member;
+import com.github.arielgrabijas.server.model.entities.Fellowshipmember;
+import com.github.arielgrabijas.server.service.FellowshipService;
 
 @RestController
 @RequestMapping("fellowship")
@@ -32,7 +33,7 @@ public class FellowshipController {
 	private FellowshipService service;
 	
 	@GetMapping("/member")
-	public List<Fellowshipmember> getMembers(){
+	public List<Member> getMembers(){
 		return service.getMembers();
 	}
 	
@@ -42,13 +43,13 @@ public class FellowshipController {
 	}
 	
 	@PostMapping("/member")
-	public ResponseEntity<?> saveMember(@RequestBody Fellowshipmember newMember) {
+	public ResponseEntity<?> saveMember(@RequestBody Member newMember) {
 		service.saveMember(newMember);
 		return ResponseEntity.created(URI.create(String.format("/member/%d", newMember.getId()))).build();
 	}
 	
 	@PutMapping("/member/{id}")
-	public ResponseEntity<?> updateMember(@RequestBody Fellowshipmember fullyUpdatedMember, @PathVariable Integer id){
+	public ResponseEntity<?> updateMember(@RequestBody Member fullyUpdatedMember, @PathVariable Integer id){
 		Fellowshipmember member = service.getMember(id);
 		if(member == null) {
 			service.saveMember(fullyUpdatedMember);
