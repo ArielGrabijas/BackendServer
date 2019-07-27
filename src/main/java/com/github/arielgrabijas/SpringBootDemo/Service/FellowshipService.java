@@ -12,29 +12,29 @@ import com.github.arielgrabijas.SpringBootDemo.Repository.FellowshipMemberDAO;
 public class FellowshipService {
 
 	@Autowired
-	private FellowshipMemberDAO memberRepo;
+	private FellowshipMemberDAO memberRepository;
 	
 	public Fellowshipmember getMember(Integer id) {
-		return memberRepo.getById(id);
+		return memberRepository.getById(id);
 	}
 
 	public List<Fellowshipmember> getMembers(){
-		return memberRepo.findAll();
+		return memberRepository.findAll();
 	}
 	
 	public void saveMember(Fellowshipmember newMember) {
-		memberRepo.saveAndFlush(newMember);
+		memberRepository.saveAndFlush(newMember);
 	}
 	
 	public void deleteMember(Integer id) {
-		memberRepo.deleteById(id);
+		memberRepository.deleteById(id);
 	}
 	
-	public void deleteMembers(List<Integer> ids) {
-		memberRepo.deleteAllById(ids);
+	public void deleteManyMembers(List<Integer> ids) {
+		memberRepository.deleteAllById(ids);
 	}
 	
-	public void updateMember(Fellowshipmember fullyUpdatedMember) {
-		memberRepo.saveAndFlush(fullyUpdatedMember);
+	public void fullyUpdateMember(Fellowshipmember updatedMember) {
+		memberRepository.saveAndFlush(updatedMember);
 	}
 }

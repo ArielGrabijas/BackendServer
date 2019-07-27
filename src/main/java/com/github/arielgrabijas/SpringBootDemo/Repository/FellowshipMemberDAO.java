@@ -15,7 +15,7 @@ public interface FellowshipMemberDAO extends JpaRepository<Fellowshipmember, Int
 	    You will now be able to use JpaRepository’s methods like save(), findOne(), findAll(), count(), delete() etc.
     */
 	
-	Fellowshipmember getById(Integer id);
+	public Fellowshipmember getById(Integer id);
 
-	void deleteAllById(List<Integer> id);
+	public void deleteAllById(List<Integer> id);
 }

@@ -2,6 +2,8 @@ package com.github.arielgrabijas.SpringBootDemo.Model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.util.Date;
 
 
@@ -19,6 +21,7 @@ public class Fellowshipmember implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date joined;
 
+	@NotNull
 	private String name;
 
 	private String race;
