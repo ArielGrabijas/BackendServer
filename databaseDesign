@@ -7,3 +7,13 @@ CREATE TABLE fellowshipmember (
 	race TEXT,
 	weapontype TEXT
 )
+
+INSERT INTO fellowshipmember VALUES (
+	DEFAULT,
+	now(),
+	'Legolas',
+	'elf',
+	'bow and arrows'
+)
+
+SELECT * FROM fellowshipmember
