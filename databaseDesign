@@ -1,0 +1,9 @@
+﻿
+
+CREATE TABLE fellowshipmember (
+	id SERIAL PRIMARY KEY,
+	joined TIMESTAMP,
+	name TEXT NOT NULL,
+	race TEXT,
+	weapontype TEXT
+)
