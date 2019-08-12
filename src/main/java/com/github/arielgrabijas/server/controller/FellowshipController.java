@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.arielgrabijas.server.model.dto.Member;
-import com.github.arielgrabijas.server.model.entities.Fellowshipmember;
 import com.github.arielgrabijas.server.service.FellowshipService;
 
 @RestController
@@ -27,24 +26,26 @@ public class FellowshipController {
     private FellowshipService service;
 
     @GetMapping("/member")
-    public List<Member> getMembers() {
-        return service.getMembers();
+    public ResponseEntity<List<Member>> getMembers() {
+        List<Member> members = service.getMembers();
+        return ResponseEntity.status(HttpStatus.OK).body(members);
     }
 
     @GetMapping("/member/{id}")
-    public Fellowshipmember getMember(@PathVariable Integer id) {
-        return service.getMember(id);
+    public ResponseEntity<Member> getMember(@PathVariable Integer id) {
+        Member member = service.getMember(id);
+        return ResponseEntity.status(HttpStatus.OK).body(member);
     }
 
     @PostMapping("/member")
-    public ResponseEntity<?> saveMember(@RequestBody Member newMember) {
+    public ResponseEntity<String> saveMember(@RequestBody Member newMember) {
         service.saveMember(newMember);
         return ResponseEntity.status(HttpStatus.CREATED).body("member created");
     }
 
     @PutMapping("/member/{id}")
-    public ResponseEntity<?> updateMember(@RequestBody Member fullyUpdatedMember, @PathVariable Integer id) {
-        Fellowshipmember member = service.getMember(id);
+    public ResponseEntity<String> updateMember(@RequestBody Member fullyUpdatedMember, @PathVariable Integer id) {
+        Member member = service.getMember(id);
         if (member == null) {
             service.saveMember(fullyUpdatedMember);
             return ResponseEntity.created(URI.create(String.format("/member/%d", id))).build();
@@ -54,8 +55,8 @@ public class FellowshipController {
     }
 
     @DeleteMapping("/member/{id}")
-    public void deleteMember(@PathVariable Integer id) {
+    public ResponseEntity<String> deleteMember(@PathVariable Integer id) {
         service.deleteMember(id);
+        return ResponseEntity.status(HttpStatus.OK).body("member deleted");
     }
-
 }
