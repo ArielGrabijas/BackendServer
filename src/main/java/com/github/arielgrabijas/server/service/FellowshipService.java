@@ -1,10 +1,12 @@
 package com.github.arielgrabijas.server.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.arielgrabijas.server.model.dto.Member;
 import com.github.arielgrabijas.server.model.entities.Fellowshipmember;
@@ -30,6 +32,15 @@ public class FellowshipService {
 
     public void saveMember(Member newMember) {
         memberRepository.saveAndFlush(new Fellowshipmember(newMember));
+    }
+
+    @Transactional
+    public void saveMembers(Collection<Member> members) {
+        Collection<Fellowshipmember> fellowshipMembers = members.stream()
+                .map(member -> new Fellowshipmember(member))
+                .collect(Collectors.toList());
+
+        memberRepository.saveAll(fellowshipMembers);
     }
 
     public void deleteMember(Integer id) {
