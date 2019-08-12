@@ -13,34 +13,34 @@ import com.github.arielgrabijas.server.repository.FellowshipMemberDAO;
 @Service
 public class FellowshipService {
 
-	@Autowired
-	private FellowshipMemberDAO memberRepository;
-	
-	public Fellowshipmember getMember(Integer id) {
-		return memberRepository.getById(id);
-	}
+    @Autowired
+    private FellowshipMemberDAO memberRepository;
 
-	public List<Member> getMembers(){
-		List<Fellowshipmember> entityMemebers = memberRepository.findAll();
-		
-		return entityMemebers.stream()
-				.map(entity -> new Member(entity))
-				.collect(Collectors.toList());
-	}
-	
-	public void saveMember(Member newMember) {
-		memberRepository.saveAndFlush(new Fellowshipmember(newMember));
-	}
-	
-	public void deleteMember(Integer id) {
-		memberRepository.deleteById(id);
-	}
-	
-	public void deleteManyMembers(List<Integer> ids) {
-		memberRepository.deleteAllById(ids);
-	}
-	
-	public void fullyUpdateMember(Member updatedMember) {
-		memberRepository.saveAndFlush(new Fellowshipmember(updatedMember));
-	}
+    public Member getMember(Integer id) {
+        return new Member(memberRepository.getById(id));
+    }
+
+    public List<Member> getMembers() {
+        List<Fellowshipmember> entityMemebers = memberRepository.findAll();
+
+        return entityMemebers.stream()
+                .map(entity -> new Member(entity))
+                .collect(Collectors.toList());
+    }
+
+    public void saveMember(Member newMember) {
+        memberRepository.saveAndFlush(new Fellowshipmember(newMember));
+    }
+
+    public void deleteMember(Integer id) {
+        memberRepository.deleteById(id);
+    }
+
+    public void deleteManyMembers(List<Integer> ids) {
+        memberRepository.deleteAllById(ids);
+    }
+
+    public void fullyUpdateMember(Member updatedMember) {
+        memberRepository.saveAndFlush(new Fellowshipmember(updatedMember));
+    }
 }
