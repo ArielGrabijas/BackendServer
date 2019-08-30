@@ -1,3 +1,4 @@
+
 CREATE TABLE fellowshipmember (
 	id SERIAL PRIMARY KEY,
 	joined TIMESTAMP,
@@ -27,6 +28,32 @@ CREATE TABLE custom_user (
 	password TEXT NOT NULL,
 	enabled BOOLEAN
 )
+
+SELECT * FROM custom_user
+
+INSERT INTO custom_user VALUES (DEFAULT, 'username1', 'pass1', true)
+
+INSERT INTO oauth_client_details (client_id,client_secret,scope,authorized_grant_types) VALUES ('client1','clientpass1','read_profile','password')
+
+-- insert client details
+INSERT INTO oauth_client_details 
+   (client_id, client_secret, scope, authorized_grant_types, 
+   authorities, access_token_validity, refresh_token_validity)
+VALUES
+   ('crmClient1', 'crmSuperSecret', 'read,write,trust', 'password,refresh_token', 
+   'ROLE_CLIENT,ROLE_TRUSTED_CLIENT', 900, 2592000);
+
+
+   INSERT INTO oauth_client_details
+    (client_id, client_secret, scope, authorized_grant_types,
+    web_server_redirect_uri, authorities, access_token_validity,
+    refresh_token_validity, additional_information, autoapprove)
+VALUES
+    ('fooClientIdPassword', 'secret', 'foo,read,write',
+    'password,authorization_code,refresh_token', null, null, 36000, 36000, null, true);
+
+    
+SELECT * FROM oauth_client_details
 
 CREATE TABLE oauth_client_details 
 (
