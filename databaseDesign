@@ -17,3 +17,15 @@ INSERT INTO fellowshipmember VALUES (
 )
 
 SELECT * FROM fellowshipmember
+
+CREATE TABLE authorities (
+	id SERIAL PRIMARY KEY,
+	role TEXT NOT NULL
+)
+
+CREATE TABLE custom_user (
+	id SERIAL PRIMARY KEY,
+	username TEXT NOT NULL,
+	password TEXT NOT NULL,
+	enabled BOOLEAN
+)
