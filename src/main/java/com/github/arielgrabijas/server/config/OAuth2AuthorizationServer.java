@@ -3,7 +3,6 @@ package com.github.arielgrabijas.server.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,11 +27,12 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
 
     // for loading Users from DB
     @Autowired
-    @Qualifier("CustomUserDetailsService")
+    // @Qualifier("CustomUserDetailsService")
     private UserDetailsService userDetailsService;
 
-    // Required by password grant type?
-    @Autowired
+    // In order to use the “password” grant type we need to wire in and use the AuthenticationManager bean
+    // @Autowired
+    // @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -51,16 +51,20 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
         return new JdbcApprovalStore(dataSource);
     }
 
+    // this code purpose is to to expose an AuthenticationManager bean.
+    @Bean
+    public AuthenticationManager customAuthenticationManager() {
+        return authenticationManager;
+    }
+
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        //@formatter:off
         endpoints
-        .allowedTokenEndpointRequestMethods() //trying to fix 401 error, does not work
-        .approvalStore(approvalStore())
-        .tokenStore(tokenStore())
-        .userDetailsService(userDetailsService)        // for loading users from database
-        .authenticationManager(authenticationManager); // for password grant type?
-        //@formatter:on
+                .allowedTokenEndpointRequestMethods() // trying to fix 401 error, does not work
+                .approvalStore(approvalStore())
+                .tokenStore(tokenStore())
+                .userDetailsService(userDetailsService)
+                .authenticationManager(authenticationManager);
     }
 
     @Override

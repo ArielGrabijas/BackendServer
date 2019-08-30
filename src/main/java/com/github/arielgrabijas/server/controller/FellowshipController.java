@@ -19,7 +19,7 @@ import com.github.arielgrabijas.server.model.dto.Member;
 import com.github.arielgrabijas.server.service.FellowshipService;
 
 @RestController
-@RequestMapping("fellowship")
+@RequestMapping("/fellowship")
 public class FellowshipController {
 
     @Autowired

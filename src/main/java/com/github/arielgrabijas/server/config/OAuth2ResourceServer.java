@@ -13,12 +13,14 @@ public class OAuth2ResourceServer extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/verification/**", "/api/signup/**", "/signup/**", "/registerClient/**").permitAll() // Everything under /signup/** will
-                                                                                                                   // be available for any kind of
-                                                                                                                   // request. Even unauthorized one.
-                .antMatchers("/api/premium/**").hasRole("PREMIUM")
+                .antMatchers("free/**")
+                .permitAll() // Everything under /signup/** will
+                             // be available for any kind of
+                             // request. Even unauthorized one.
+                .antMatchers("/api/premium/**")
+                .hasRole("PREMIUM")
                 // .antMatchers("/api/user/**").hasAnyRole("PREMIUM","FREE")
-                .anyRequest().authenticated();
-
+                // .anyRequest().authenticated()
+                .and().formLogin().disable();
     }
 }
