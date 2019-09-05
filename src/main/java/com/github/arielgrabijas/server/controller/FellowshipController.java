@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.arielgrabijas.server.model.dto.Member;
+import com.github.arielgrabijas.server.model.dto.MemberDTO;
 import com.github.arielgrabijas.server.service.FellowshipService;
 
 @RestController
@@ -26,31 +26,32 @@ public class FellowshipController {
     private FellowshipService service;
 
     @GetMapping("/member")
-    public ResponseEntity<List<Member>> getMembers() {
-        List<Member> members = service.getMembers();
+    public ResponseEntity<List<MemberDTO>> getMembers() {
+        List<MemberDTO> members = service.getMembers();
         return ResponseEntity.status(HttpStatus.OK).body(members);
     }
 
     @GetMapping("/member/{id}")
-    public ResponseEntity<Member> getMember(@PathVariable Integer id) {
-        Member member = service.getMember(id);
+    public ResponseEntity<MemberDTO> getMember(@PathVariable Integer id) {
+        MemberDTO member = service.getMember(id);
         return ResponseEntity.status(HttpStatus.OK).body(member);
     }
 
     @PostMapping("/member")
-    public ResponseEntity<String> saveMember(@RequestBody Member newMember) {
+    public ResponseEntity<String> saveMember(@RequestBody MemberDTO newMember) {
         service.saveMember(newMember);
         return ResponseEntity.status(HttpStatus.CREATED).body("member created");
     }
 
     @PutMapping("/member/{id}")
-    public ResponseEntity<String> updateMember(@RequestBody Member fullyUpdatedMember, @PathVariable Integer id) {
-        Member member = service.getMember(id);
-        if (member == null) {
+    public ResponseEntity<String> updateMember(@RequestBody MemberDTO fullyUpdatedMember, @PathVariable Integer id) {
+        if (service.getMember(id) == null) {
             service.saveMember(fullyUpdatedMember);
             return ResponseEntity.created(URI.create(String.format("/member/%d", id))).build();
         }
-        service.saveMember(fullyUpdatedMember);
+
+        fullyUpdatedMember.setId(id);
+        service.fullyUpdateMember(fullyUpdatedMember);
         return ResponseEntity.status(HttpStatus.OK).body("member updated");
     }
 
