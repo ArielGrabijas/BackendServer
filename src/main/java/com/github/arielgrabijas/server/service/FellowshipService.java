@@ -13,6 +13,7 @@ import com.github.arielgrabijas.server.model.entities.Fellowshipmember;
 import com.github.arielgrabijas.server.repository.FellowshipMemberDAO;
 
 @Service
+
 public class FellowshipService {
 
     @Autowired
@@ -51,9 +52,9 @@ public class FellowshipService {
         memberRepository.deleteAllById(ids);
     }
 
-    // coś tu nie działa tak jak powinno.... zła wersja nie blokuje update'a na bazie
     public void fullyUpdateMember(MemberDTO updatedMember) {
-        Fellowshipmember member = memberRepository.getById(updatedMember.getId());
+        Fellowshipmember member = new Fellowshipmember();
+        member.setId(26);
         member.setName(updatedMember.getName());
         member.setWeapontype(updatedMember.getWeapontype());
         member.setRace(updatedMember.getRace());

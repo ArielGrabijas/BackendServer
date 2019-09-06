@@ -9,10 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OptimisticLock;
-import org.springframework.data.annotation.Version;
 
 import com.github.arielgrabijas.server.model.dto.MemberDTO;
 
@@ -30,7 +30,7 @@ public class Fellowshipmember implements Serializable {
     private Integer id;
 
     @Temporal(TemporalType.DATE)
-    @OptimisticLock(excluded = true) // modyfikacja tego pola nie będzie wpływała na zmianę wersji obiektu w bazie.
+    @OptimisticLock(excluded = true) // modyfikacja tego pola nie będzie wpływała na zmianę wersji obiektu w bazie
     private Date joined;
 
     @NotNull
