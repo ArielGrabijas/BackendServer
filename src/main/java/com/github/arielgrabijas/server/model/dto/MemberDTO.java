@@ -1,10 +1,12 @@
 package com.github.arielgrabijas.server.model.dto;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
 import com.github.arielgrabijas.server.model.entities.Fellowshipmember;
+import com.github.arielgrabijas.server.model.entities.Weapon;
 
 /**
  * Data Transfer Object for Fellowshipmember entity.
@@ -20,7 +22,7 @@ public class MemberDTO {
 
     private String race;
 
-    private String weapontype;
+    private Collection<Weapon> weapons;
 
     private Integer version;
 
@@ -33,7 +35,7 @@ public class MemberDTO {
         this.joined = member.getJoined();
         this.name = member.getName();
         this.race = member.getRace();
-        this.weapontype = member.getWeapontype();
+        this.weapons = member.getWeapontype();
     }
 
     public Integer getId() {
@@ -68,12 +70,12 @@ public class MemberDTO {
         this.race = race;
     }
 
-    public String getWeapontype() {
-        return this.weapontype;
+    public Collection<Weapon> getWeapontype() {
+        return this.weapons;
     }
 
-    public void setWeapontype(String weapontype) {
-        this.weapontype = weapontype;
+    public void setWeapontype(Collection<Weapon> weapons) {
+        this.weapons = weapons;
     }
 
     public Integer getVersion() {

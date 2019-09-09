@@ -1,12 +1,17 @@
 package com.github.arielgrabijas.server.model.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -38,7 +43,10 @@ public class Fellowshipmember implements Serializable {
 
     private String race;
 
-    private String weapontype;
+    // for now this is unidirectional relation
+    @OneToMany(targetEntity = Weapon.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fellowshipmember_id")
+    private Collection<Weapon> weapons;
 
     // adnotacja dla hibernate, jej celem jest porównanie wersji zmodyfikowanego przez frontend obiektu z wersją obiektu w bazie danych.
     // Jeżeli te wersje są zgodne, to znaczy że nikt inny nie zmienił wersji w międzyczasie. Podskórnie zakładana jest transakcja która
@@ -55,7 +63,7 @@ public class Fellowshipmember implements Serializable {
         this.joined = member.getJoined();
         this.name = member.getName();
         this.race = member.getRace();
-        this.weapontype = member.getWeapontype();
+        // this.weapons = member.getWeapontype();
     }
 
     public Integer getId() {
@@ -90,12 +98,12 @@ public class Fellowshipmember implements Serializable {
         this.race = race;
     }
 
-    public String getWeapontype() {
-        return this.weapontype;
+    public Collection<Weapon> getWeapontype() {
+        return this.weapons;
     }
 
-    public void setWeapontype(String weapontype) {
-        this.weapontype = weapontype;
+    public void setWeapontype(Collection<Weapon> weapontype) {
+        this.weapons = weapontype;
     }
 
     public Integer getVersion() {

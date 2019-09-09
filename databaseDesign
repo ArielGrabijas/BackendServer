@@ -3,10 +3,12 @@ CREATE TABLE fellowshipmember (
 	joined TIMESTAMP,
 	name TEXT NOT NULL,
 	race TEXT,
-	weapontype TEXT
+	version INTEGER NOT NULL
+	weapon_id TEXT
 )
 
 CREATE TABLE weapon (
-	weapon_id SERIAL PRIMARY KEY,
-	name TEXT UNIQUE NOT NULL ,	
+	id_weapon SERIAL PRIMARY KEY,
+	name TEXT UNIQUE NOT NULL,
+	fellowshipmember_id INTEGER REFERENCES fellowshipmember(id)
 )
