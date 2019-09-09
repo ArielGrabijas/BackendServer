@@ -1,5 +1,3 @@
-﻿
-
 CREATE TABLE fellowshipmember (
 	id SERIAL PRIMARY KEY,
 	joined TIMESTAMP,
@@ -8,12 +6,8 @@ CREATE TABLE fellowshipmember (
 	weapontype TEXT
 )
 
-INSERT INTO fellowshipmember VALUES (
-	DEFAULT,
-	now(),
-	'Legolas',
-	'elf',
-	'bow and arrows'
+CREATE TABLE weapon (
+	id_weapon SERIAL PRIMARY KEY,
+	name TEXT UNIQUE NOT NULL,
+	fellowshipmember_id INTEGER REFERENCES fellowshipmember(id)
 )
-
-SELECT * FROM fellowshipmember
