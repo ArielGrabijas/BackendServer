@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -42,11 +43,10 @@ public class Fellowshipmember implements Serializable {
 
     private String race;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    // for now this is unidirectional relation
+    @OneToMany(targetEntity = Weapon.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fellowshipmember_id")
     private Collection<Weapon> weapons;
-
-    // private String weapontype;
 
     // adnotacja dla hibernate, jej celem jest porównanie wersji zmodyfikowanego przez frontend obiektu z wersją obiektu w bazie danych.
     // Jeżeli te wersje są zgodne, to znaczy że nikt inny nie zmienił wersji w międzyczasie. Podskórnie zakładana jest transakcja która
@@ -63,7 +63,7 @@ public class Fellowshipmember implements Serializable {
         this.joined = member.getJoined();
         this.name = member.getName();
         this.race = member.getRace();
-        this.weapons = member.getWeaponstype();
+        // this.weapons = member.getWeapontype();
     }
 
     public Integer getId() {
@@ -98,11 +98,11 @@ public class Fellowshipmember implements Serializable {
         this.race = race;
     }
 
-    public Collection<String> getWeapontype() {
+    public Collection<Weapon> getWeapontype() {
         return this.weapons;
     }
 
-    public void setWeapontype(Collection<String> weapontype) {
+    public void setWeapontype(Collection<Weapon> weapontype) {
         this.weapons = weapontype;
     }
 
