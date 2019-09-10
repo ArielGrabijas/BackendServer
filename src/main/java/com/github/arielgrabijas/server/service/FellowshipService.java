@@ -56,7 +56,7 @@ public class FellowshipService {
         Fellowshipmember member = new Fellowshipmember();
         member.setId(26);
         member.setName(updatedMember.getName());
-        member.setWeapontype(updatedMember.getWeapontype());
+        member.setWeapons(updatedMember.getWeapons());
         member.setRace(updatedMember.getRace());
         member.setJoined(updatedMember.getJoined());
         member.setVersion(updatedMember.getVersion());
