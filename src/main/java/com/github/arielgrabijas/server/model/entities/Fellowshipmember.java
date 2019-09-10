@@ -63,7 +63,8 @@ public class Fellowshipmember implements Serializable {
         this.joined = member.getJoined();
         this.name = member.getName();
         this.race = member.getRace();
-        // this.weapons = member.getWeapontype();
+        this.weapons = member.getWeapons();
+        this.version = member.getVersion();
     }
 
     public Integer getId() {
@@ -98,11 +99,11 @@ public class Fellowshipmember implements Serializable {
         this.race = race;
     }
 
-    public Collection<Weapon> getWeapontype() {
+    public Collection<Weapon> getWeapons() {
         return this.weapons;
     }
 
-    public void setWeapontype(Collection<Weapon> weapontype) {
+    public void setWeapons(Collection<Weapon> weapontype) {
         this.weapons = weapontype;
     }
 

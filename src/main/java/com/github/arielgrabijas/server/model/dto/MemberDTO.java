@@ -35,7 +35,8 @@ public class MemberDTO {
         this.joined = member.getJoined();
         this.name = member.getName();
         this.race = member.getRace();
-        this.weapons = member.getWeapontype();
+        this.weapons = member.getWeapons();
+        this.version = member.getVersion();
     }
 
     public Integer getId() {
@@ -70,11 +71,11 @@ public class MemberDTO {
         this.race = race;
     }
 
-    public Collection<Weapon> getWeapontype() {
+    public Collection<Weapon> getWeapons() {
         return this.weapons;
     }
 
-    public void setWeapontype(Collection<Weapon> weapons) {
+    public void setWeapons(Collection<Weapon> weapons) {
         this.weapons = weapons;
     }
 

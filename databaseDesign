@@ -4,11 +4,14 @@ CREATE TABLE fellowshipmember (
 	name TEXT NOT NULL,
 	race TEXT,
 	version INTEGER NOT NULL
-	weapon_id TEXT
+	weapon_id INTEGER
 )
 
 CREATE TABLE weapon (
 	id_weapon SERIAL PRIMARY KEY,
 	name TEXT UNIQUE NOT NULL,
 	fellowshipmember_id INTEGER REFERENCES fellowshipmember(id)
+	version INTEGER NOT NULL 
 )
+
+ALTER TABLE weapon ADD version INTEGER
