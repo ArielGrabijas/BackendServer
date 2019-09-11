@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.arielgrabijas.server.model.dto.MemberDTO;
 import com.github.arielgrabijas.server.model.entities.Fellowshipmember;
+import com.github.arielgrabijas.server.model.entities.Weapon;
 import com.github.arielgrabijas.server.repository.FellowshipMemberDAO;
 
 @Service
@@ -54,12 +55,17 @@ public class FellowshipService {
 
     public void fullyUpdateMember(MemberDTO updatedMember) {
         Fellowshipmember member = new Fellowshipmember();
-        member.setId(26);
+        member.setId(updatedMember.getId());
         member.setName(updatedMember.getName());
-        member.setWeapons(updatedMember.getWeapons());
         member.setRace(updatedMember.getRace());
         member.setJoined(updatedMember.getJoined());
         member.setVersion(updatedMember.getVersion());
+
+        Collection<Weapon> weapons = updatedMember.getWeapons().stream()
+                .map(weaponDto -> new Weapon(weaponDto))
+                .collect(Collectors.toList());
+        member.setWeapons(weapons);
+
         memberRepository.saveAndFlush(member);
     }
 }
