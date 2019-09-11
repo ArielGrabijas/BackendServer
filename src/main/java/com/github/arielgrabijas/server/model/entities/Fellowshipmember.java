@@ -103,8 +103,8 @@ public class Fellowshipmember implements Serializable {
         return this.weapons;
     }
 
-    public void setWeapons(Collection<Weapon> weapontype) {
-        this.weapons = weapontype;
+    public void setWeapons(Collection<Weapon> weapons) {
+        this.weapons = weapons;
     }
 
     public Integer getVersion() {
