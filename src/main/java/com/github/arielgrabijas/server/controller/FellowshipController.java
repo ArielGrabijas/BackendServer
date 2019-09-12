@@ -44,7 +44,6 @@ public class FellowshipController {
 
     @PutMapping("/member/{id}")
     public ResponseEntity<String> updateMember(@RequestBody MemberDTO fullyUpdatedMember, @PathVariable Integer id) {
-        // TODO exception when there is no member with provided id.
         fullyUpdatedMember.setId(id);
         service.fullyUpdateMember(fullyUpdatedMember);
         return ResponseEntity.status(HttpStatus.OK).body("member updated");

@@ -21,7 +21,9 @@ public class FellowshipService {
     private FellowshipMemberDAO memberRepository;
 
     public MemberDTO getMember(Integer id) {
-        return new MemberDTO(memberRepository.getById(id));
+        Fellowshipmember member = memberRepository.getById(id);
+
+        return new MemberDTO(member);
     }
 
     public List<MemberDTO> getMembers() {
@@ -64,6 +66,9 @@ public class FellowshipService {
         Collection<Weapon> weapons = updatedMember.getWeapons().stream()
                 .map(weaponDto -> new Weapon(weaponDto))
                 .collect(Collectors.toList());
+
+        weapons.stream()
+                .forEach(weaponEntity -> weaponEntity.setFellowshipMemberId(member.getId()));
         member.setWeapons(weapons);
 
         memberRepository.saveAndFlush(member);

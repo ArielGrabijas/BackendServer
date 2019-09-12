@@ -1,5 +1,6 @@
 package com.github.arielgrabijas.server.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.arielgrabijas.server.model.entities.Weapon;
 
 public class WeaponDTO {
@@ -8,9 +9,10 @@ public class WeaponDTO {
 
     private String name;
 
-    private Integer fellowshipMemberId;
-
     private Integer version;
+
+    @JsonIgnore
+    private Integer fellowshipMemberId;
 
     public WeaponDTO() {
     }
@@ -18,8 +20,7 @@ public class WeaponDTO {
     public WeaponDTO(Weapon weapon) {
         weaponId = weapon.getId();
         name = weapon.getName();
-        fellowshipMemberId = weapon.getId();
-        version = weapon.getId();
+        version = weapon.getVersion();
     }
 
     public String getName() {
@@ -38,19 +39,19 @@ public class WeaponDTO {
         this.weaponId = weaponId;
     }
 
-    public Integer getFellowshipMemberId() {
-        return fellowshipMemberId;
-    }
-
-    public void setFellowshipMemberId(Integer fellowshipMemberId) {
-        this.fellowshipMemberId = fellowshipMemberId;
-    }
-
     public Integer getVersion() {
         return version;
     }
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public Integer getFellowshipMemberId() {
+        return fellowshipMemberId;
+    }
+
+    public void setFellowshipMemberId(Integer fellowshipMemberId) {
+        this.fellowshipMemberId = fellowshipMemberId;
     }
 }

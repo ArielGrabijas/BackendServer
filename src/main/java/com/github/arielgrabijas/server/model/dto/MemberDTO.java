@@ -36,7 +36,7 @@ public class MemberDTO {
         this.name = member.getName();
         this.race = member.getRace();
         this.weapons = member.getWeapons().stream()
-                .map(a -> new WeaponDTO(a))
+                .map(weaponEntity -> new WeaponDTO(weaponEntity))
                 .collect(Collectors.toList());
         this.version = member.getVersion();
     }
