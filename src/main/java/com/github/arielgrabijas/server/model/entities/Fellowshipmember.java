@@ -3,6 +3,7 @@ package com.github.arielgrabijas.server.model.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -63,7 +64,9 @@ public class Fellowshipmember implements Serializable {
         this.joined = member.getJoined();
         this.name = member.getName();
         this.race = member.getRace();
-        this.weapons = member.getWeapons();
+        this.weapons = member.getWeapons().stream()
+                .map(weaponDto -> new Weapon(weaponDto))
+                .collect(Collectors.toList());
         this.version = member.getVersion();
     }
 

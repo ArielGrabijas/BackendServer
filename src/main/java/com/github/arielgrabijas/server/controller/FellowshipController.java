@@ -1,6 +1,5 @@
 package com.github.arielgrabijas.server.controller;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +44,7 @@ public class FellowshipController {
 
     @PutMapping("/member/{id}")
     public ResponseEntity<String> updateMember(@RequestBody MemberDTO fullyUpdatedMember, @PathVariable Integer id) {
-        if (service.getMember(id) == null) {
-            service.saveMember(fullyUpdatedMember);
-            return ResponseEntity.created(URI.create(String.format("/member/%d", id))).build();
-        }
-
+        // TODO exception when there is no member with provided id.
         fullyUpdatedMember.setId(id);
         service.fullyUpdateMember(fullyUpdatedMember);
         return ResponseEntity.status(HttpStatus.OK).body("member updated");
