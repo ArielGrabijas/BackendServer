@@ -14,7 +14,6 @@ import com.github.arielgrabijas.server.model.entities.Weapon;
 import com.github.arielgrabijas.server.repository.FellowshipMemberDAO;
 
 @Service
-
 public class FellowshipService {
 
     @Autowired
@@ -55,6 +54,7 @@ public class FellowshipService {
         memberRepository.deleteAllById(ids);
     }
 
+    @Transactional
     public void fullyUpdateMember(MemberDTO updatedMember) {
         Fellowshipmember member = new Fellowshipmember();
         member.setId(updatedMember.getId());
@@ -72,5 +72,6 @@ public class FellowshipService {
         member.setWeapons(weapons);
 
         memberRepository.saveAndFlush(member);
+
     }
 }
