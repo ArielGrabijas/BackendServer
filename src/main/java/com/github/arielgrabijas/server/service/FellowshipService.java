@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.arielgrabijas.server.exceptions.CustomException;
+import com.github.arielgrabijas.server.exceptions.StandardisedExceptions;
 import com.github.arielgrabijas.server.model.dto.MemberDTO;
 import com.github.arielgrabijas.server.model.entities.Fellowshipmember;
 import com.github.arielgrabijas.server.model.entities.Weapon;
@@ -34,6 +36,7 @@ public class FellowshipService {
     }
 
     public void saveMember(MemberDTO newMember) {
+
         memberRepository.saveAndFlush(new Fellowshipmember(newMember));
     }
 
@@ -55,23 +58,26 @@ public class FellowshipService {
     }
 
     @Transactional
-    public void fullyUpdateMember(MemberDTO updatedMember) {
-        Fellowshipmember member = new Fellowshipmember();
-        member.setId(updatedMember.getId());
-        member.setName(updatedMember.getName());
-        member.setRace(updatedMember.getRace());
-        member.setJoined(updatedMember.getJoined());
-        member.setVersion(updatedMember.getVersion());
+    public void fullyUpdateMember(MemberDTO updatedMember) throws CustomException {
+        try {
+            Fellowshipmember member = new Fellowshipmember();
+            member.setId(updatedMember.getId());
+            member.setName(updatedMember.getName());
+            member.setRace(updatedMember.getRace());
+            member.setJoined(updatedMember.getJoined());
+            member.setVersion(updatedMember.getVersion());
 
-        Collection<Weapon> weapons = updatedMember.getWeapons().stream()
-                .map(weaponDto -> new Weapon(weaponDto))
-                .collect(Collectors.toList());
+            Collection<Weapon> weapons = updatedMember.getWeapons().stream()
+                    .map(weaponDto -> new Weapon(weaponDto))
+                    .collect(Collectors.toList());
 
-        weapons.stream()
-                .forEach(weaponEntity -> weaponEntity.setFellowshipMemberId(member.getId()));
-        member.setWeapons(weapons);
+            weapons.stream()
+                    .forEach(weaponEntity -> weaponEntity.setFellowshipMemberId(member.getId()));
+            member.setWeapons(weapons);
 
-        memberRepository.saveAndFlush(member);
-
+            memberRepository.saveAndFlush(member);
+        } catch (RuntimeException e) {
+            throw new CustomException(StandardisedExceptions.STALE_DATA_EXCEPTION);
+        }
     }
 }

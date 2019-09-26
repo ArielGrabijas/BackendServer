@@ -26,7 +26,7 @@ import com.github.arielgrabijas.server.model.dto.MemberDTO;
  * The persistent class for the fellowshipmember database table.
  */
 @Entity
-// @DynamicUpdate(value = true) /// ???
+// @DynamicUpdate(value = true) ???
 public class Fellowshipmember implements Serializable {
 
     private static final long serialVersionUID = 1L;

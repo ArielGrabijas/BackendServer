@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.arielgrabijas.server.exceptions.CustomException;
 import com.github.arielgrabijas.server.model.dto.MemberDTO;
 import com.github.arielgrabijas.server.service.FellowshipService;
 
@@ -43,7 +44,7 @@ public class FellowshipController {
     }
 
     @PutMapping("/member/{id}")
-    public ResponseEntity<String> updateMember(@RequestBody MemberDTO fullyUpdatedMember, @PathVariable Integer id) {
+    public ResponseEntity<String> updateMember(@RequestBody MemberDTO fullyUpdatedMember, @PathVariable Integer id) throws CustomException {
         fullyUpdatedMember.setId(id);
         service.fullyUpdateMember(fullyUpdatedMember);
         return ResponseEntity.status(HttpStatus.OK).body("member updated");
