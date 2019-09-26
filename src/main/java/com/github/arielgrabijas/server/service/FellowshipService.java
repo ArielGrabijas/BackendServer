@@ -60,19 +60,17 @@ public class FellowshipService {
     @Transactional
     public void fullyUpdateMember(MemberDTO updatedMember) throws CustomException {
         try {
-            Fellowshipmember member = new Fellowshipmember();
-            member.setId(updatedMember.getId());
-            member.setName(updatedMember.getName());
-            member.setRace(updatedMember.getRace());
-            member.setJoined(updatedMember.getJoined());
-            member.setVersion(updatedMember.getVersion());
+            Fellowshipmember member = new Fellowshipmember(updatedMember);
 
             Collection<Weapon> weapons = updatedMember.getWeapons().stream()
                     .map(weaponDto -> new Weapon(weaponDto))
                     .collect(Collectors.toList());
 
             weapons.stream()
-                    .forEach(weaponEntity -> weaponEntity.setFellowshipMemberId(member.getId()));
+                    .forEach(weaponEntity -> weaponEntity.setFellowshipMemberId(member.getId())); // trzeba to ustawić, ponieważ obiekt WeaponDTO nie
+                                                                                                  // zawiera w sobie info o id fellowship, a jest to w
+                                                                                                  // bazie danych
+
             member.setWeapons(weapons);
 
             memberRepository.saveAndFlush(member);

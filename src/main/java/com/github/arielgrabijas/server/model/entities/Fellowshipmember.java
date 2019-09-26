@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLock;
 
 import com.github.arielgrabijas.server.model.dto.MemberDTO;
@@ -26,7 +27,7 @@ import com.github.arielgrabijas.server.model.dto.MemberDTO;
  * The persistent class for the fellowshipmember database table.
  */
 @Entity
-// @DynamicUpdate(value = true) ???
+@DynamicUpdate(value = true) // Specifies that UPDATE SQL should be generated at runtime and contain only those columns whose values have changed.
 public class Fellowshipmember implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,7 +45,7 @@ public class Fellowshipmember implements Serializable {
 
     private String race;
 
-    // for now this is unidirectional relation
+    // unidirectional relation
     @OneToMany(targetEntity = Weapon.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "fellowshipmember_id")
     private Collection<Weapon> weapons;
