@@ -16,12 +16,14 @@ import com.github.arielgrabijas.server.model.entities.Weapon;
 import com.github.arielgrabijas.server.repository.FellowshipMemberDAO;
 
 @Service
+
 public class FellowshipService {
 
     @Autowired
     private FellowshipMemberDAO memberRepository;
 
     public MemberDTO getMember(Integer id) {
+
         Fellowshipmember member = memberRepository.getById(id);
 
         return new MemberDTO(member);
@@ -74,5 +76,4 @@ public class FellowshipService {
 
         memberRepository.saveAndFlush(member);
     }
-
 }
