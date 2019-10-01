@@ -4,12 +4,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.StaleObjectStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.arielgrabijas.server.exceptions.CustomException;
-import com.github.arielgrabijas.server.exceptions.StandardisedExceptions;
 import com.github.arielgrabijas.server.model.dto.MemberDTO;
 import com.github.arielgrabijas.server.model.entities.Fellowshipmember;
 import com.github.arielgrabijas.server.model.entities.Weapon;
@@ -43,7 +43,7 @@ public class FellowshipService {
     @Transactional
     public void saveMembers(Collection<MemberDTO> members) {
         Collection<Fellowshipmember> fellowshipMembers = members.stream()
-                .map(member -> new Fellowshipmember(member))
+                .map(Fellowshipmember::new)
                 .collect(Collectors.toList());
 
         memberRepository.saveAll(fellowshipMembers);
@@ -57,25 +57,22 @@ public class FellowshipService {
         memberRepository.deleteAllById(ids);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = StaleObjectStateException.class)
     public void fullyUpdateMember(MemberDTO updatedMember) throws CustomException {
-        try {
-            Fellowshipmember member = new Fellowshipmember(updatedMember);
 
-            Collection<Weapon> weapons = updatedMember.getWeapons().stream()
-                    .map(weaponDto -> new Weapon(weaponDto))
-                    .collect(Collectors.toList());
+        Fellowshipmember member = new Fellowshipmember(updatedMember);
 
-            weapons.stream()
-                    .forEach(weaponEntity -> weaponEntity.setFellowshipMemberId(member.getId())); // trzeba to ustawić, ponieważ obiekt WeaponDTO nie
-                                                                                                  // zawiera w sobie info o id fellowship, a jest to w
-                                                                                                  // bazie danych
+        Collection<Weapon> weapons = updatedMember.getWeapons().stream()
+                .map(Weapon::new)
+                .collect(Collectors.toList());
 
-            member.setWeapons(weapons);
+        weapons.stream()
+                .forEach(weaponEntity -> weaponEntity.setFellowshipMemberId(member.getId())); // trzeba to ustawić, ponieważ obiekt WeaponDTO nie
+                                                                                              // zawiera w sobie info o id fellowship, a jest to w
+                                                                                              // bazie danych
+        member.setWeapons(weapons);
 
-            memberRepository.saveAndFlush(member);
-        } catch (RuntimeException e) {
-            throw new CustomException(StandardisedExceptions.STALE_DATA_EXCEPTION);
-        }
+        memberRepository.saveAndFlush(member);
     }
+
 }
